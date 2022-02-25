@@ -1,13 +1,7 @@
-import { INCREMENT, DECREMENT } from "../../types/types";
+import { SEARCH_GAME } from "../../types/types";
 
-export const increaseCounter = () => {
+export const searchGameAction = () => {
   return {
-    type: INCREMENT,
-  };
-};
-
-export const decreaseCounter = () => {
-  return {
-    type: DECREMENT,
+    type: SEARCH_GAME,
   };
 };

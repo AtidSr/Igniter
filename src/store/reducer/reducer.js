@@ -1,21 +1,15 @@
-import { INCREMENT, DECREMENT } from "../../types/types";
+import { SEARCH_GAME } from "../../types/types";
 
 const INITIAL_STATE = {
-  count: 0,
+  gameList: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case INCREMENT:
+    case SEARCH_GAME:
       return {
         ...state,
-        count: state.count + 1,
-      };
-
-    case DECREMENT:
-      return {
-        ...state,
-        count: state.count - 1,
+        result: action?.payload,
       };
 
     default:

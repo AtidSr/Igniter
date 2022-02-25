@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ruler from "../asset/ruler.svg";
 import search from "../asset/search.svg";
 
 const HeaderContainer = styled.div`
@@ -13,11 +12,11 @@ const IconContainer = styled.div`
   display: flex;
   height: 4em;
   padding: 1em 2em;
-  color: #3f37c9;
+  color: #06f;
 `;
 
 const Icon = styled.h1`
-  font-family: "Roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: "900";
   font-style: italic;
   text-transform: uppercase;
@@ -53,23 +52,17 @@ const SearchContainer = styled.div`
   width: 50%;
 `;
 
-const Image = styled.img`
-  filter: invert(26%) sepia(99%) saturate(3070%) hue-rotate(317deg)
-    brightness(98%) contrast(97%);
-`;
-
-const RouteLink = styled(Link)`
+const StyledLink = styled(Link)`
   text-decoration: none;
 `;
-const Header = () => {
+const HeaderComponent = () => {
   return (
     <HeaderContainer>
-      <RouteLink to={`/about`}>
+      <StyledLink to={`/browse`}>
         <IconContainer>
-          <Image src={ruler} alt="icon" />
           <Icon>Iginter</Icon>
         </IconContainer>
-      </RouteLink>
+      </StyledLink>
 
       <SearchContainer>
         <SearchInput type="text" background={search} />
@@ -78,4 +71,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderComponent;

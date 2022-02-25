@@ -1,15 +1,20 @@
-import React from "react";
-import FrontPageComponent from "./component/pages/FrontPage";
+import React, { useEffect } from "react";
+import { FrontPageComponent, SearchPageComponent } from "./pages";
 import GlobalStyled from "./GlobalStyled";
 import { Routes, Route } from "react-router-dom";
+import setUpEnvironment from "./environment";
 
 function App() {
+  useEffect(() => {
+    setUpEnvironment();
+  }, []);
+
   return (
     <div className="App">
+      <GlobalStyled />
       <Routes>
-        <GlobalStyled />
         <Route path="/" element={<FrontPageComponent />} />
-        <Route path="/browse" element={<FrontPageComponent />} />
+        <Route path="/browse" element={<SearchPageComponent />} />
       </Routes>
     </div>
   );

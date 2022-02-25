@@ -5,11 +5,11 @@ import mock from "../api/mock/mock.json";
 const result = mock.results;
 
 const CardContainer = styled.div`
-  border: 1px solid #dfe1e5;
   min-height: 30vh;
   overflow: hidden;
   border-radius: 10px;
   cursor: pointer;
+  box-shadow: 0 0 10px rgb(0, 0, 0, 0.4);
 `;
 const CardImage = styled.div`
   background-color: red;

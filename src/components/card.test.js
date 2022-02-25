@@ -1,10 +1,10 @@
 import React from "react";
-import FrontPageComponent from "./FrontPage";
+import CardComponent from "./card";
 import { render } from "@testing-library/react";
 
-describe("Testing Landing page", () => {
+describe("Testing Card", () => {
   it("renders without crashing", () => {
-    const { baseElement } = render(<FrontPageComponent />);
+    const { baseElement } = render(<CardComponent />);
     expect(baseElement).toBeInTheDocument();
   });
 });

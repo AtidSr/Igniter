@@ -1,16 +1,15 @@
 import React from "react";
-import Header from "./Header";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import CardViewComponent from "./cardView";
 
-describe("Testing Header", () => {
+describe("Testing Card Container", () => {
   it("renders without crashing", () => {
     const { baseElement } = render(
       <BrowserRouter>
-        <Header />
+        <CardViewComponent />
       </BrowserRouter>
     );
     expect(baseElement).toBeInTheDocument();
-    expect(screen.getByText("Iginter")).toHaveTextContent("Iginter");
   });
 });
