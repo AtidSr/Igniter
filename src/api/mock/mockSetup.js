@@ -1,7 +1,6 @@
-import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import axiosInstance from "../axios";
 
-export const axiosInstance = axios.create();
 // This sets the mock adapter on the default instance
 const mockAdapter = new MockAdapter(axiosInstance);
 
@@ -10,6 +9,8 @@ const setUpMock = (config, data, status = 200) => {
   mockAdapter.onGet(config).reply(status, data);
 };
 
+export const restore = () => {
+  mockAdapter.restore();
+};
 const mock = { mockAdapter, setUpMock };
-export const api = axiosInstance;
 export default mock;
