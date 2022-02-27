@@ -6,6 +6,7 @@ import setUpEnvironment from "./environment";
 
 function App() {
   useEffect(() => {
+    // setup mock
     setUpEnvironment();
   }, []);
 
