@@ -1,6 +1,6 @@
 import { SEARCH_GAME } from "../../types/types";
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   gameList: [],
 };
 
@@ -9,7 +9,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     case SEARCH_GAME:
       return {
         ...state,
-        result: action?.payload,
+        gameList: action.payload || [],
       };
 
     default:

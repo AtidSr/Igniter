@@ -1,4 +1,4 @@
-import { useMock } from "../environment";
+import useMock from "../environment";
 import { ENDPOINT_SEARCH } from "./endpoint";
 import axiosInstance from "./axios";
 

@@ -1,15 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import mock from "../api/mock/mock.json";
-
-const result = mock.results;
+import PropTypes from "prop-types";
 
 const CardContainer = styled.div`
   min-height: 30vh;
   overflow: hidden;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgb(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
 `;
 const CardImage = styled.div`
   background-color: red;
@@ -32,13 +30,18 @@ const CardInfo = styled.div`
   padding: 0 0.4em;
 `;
 
-const CardComponent = () => {
+const CardComponent = (props) => {
+  const { game } = props;
   return (
     <CardContainer>
-      <CardImage background={result[0].background_image} />
-      <CardInfo> {result[0].name}</CardInfo>
+      <CardImage background={game.background_image} />
+      <CardInfo> {game.name}</CardInfo>
     </CardContainer>
   );
 };
 
 export default CardComponent;
+
+PropTypes.CardComponent = {
+  game: PropTypes.object,
+};

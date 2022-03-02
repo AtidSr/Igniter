@@ -6,6 +6,13 @@ import search from "../asset/search.svg";
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: white;
+  box-shadow: 0 0 1px rgb(0, 0, 0, 0.3);
+  padding: 0.4rem;
+  z-index: 77;
 `;
 
 const IconContainer = styled.div`
