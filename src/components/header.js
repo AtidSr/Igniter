@@ -66,18 +66,19 @@ const SearchInput = styled.input`
   font-family: inherit;
   font-size: inherit;
   outline: none;
-
+  height: 3.125rem;
   ${(props) => ({
     background: `url(${props.background}) no-repeat scroll 16px`,
     backgroundSize: "16px",
   })}
-  ${(props) => switchInputStyle(props.condition)}
+  ${(props) => switchInputStyle(props.condition)};
 `;
 
 const SearchContainer = styled.div`
   display: flex;
   width: 50%;
   position: relative;
+  align-items: center;
 `;
 
 const StyledLink = styled(Link)`
@@ -96,6 +97,7 @@ const DropDownContainer = styled.ul`
   box-shadow: 0 1px 1px rgb(0, 0, 0, 0.4);
   margin-top: 3.125rem;
   overflow: hidden;
+  top: 0;
   &::before {
     content: "";
     position: absolute;
