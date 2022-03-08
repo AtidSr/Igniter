@@ -130,7 +130,7 @@ const PaginationComponent = (props) => {
 
         return (
           <PaginationItem
-            condition={"selected"}
+            condition={currentPage === index + 1 ? "selected" : ""}
             onClick={() => onPageChange(pageNumber)}
             key={`page_${index}`}
           >
@@ -148,4 +148,4 @@ const PaginationComponent = (props) => {
   );
 };
 
-export default PaginationComponent;
+export default React.memo(PaginationComponent);

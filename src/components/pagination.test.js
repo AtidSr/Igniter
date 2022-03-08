@@ -1,7 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import PaginationComponent from "./pagination";
-import { act } from "react-dom/test-utils";
 describe("Testing Pagination", () => {
   it("Renders without crashing", () => {
     const pageSize = 20;

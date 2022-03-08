@@ -1,1 +1,5 @@
 export const SEARCH_GAME = "SEARCH_GAME";
+export const GET_GAME = "GET_GAME";
+export const SET_PAGINATION = "SET_PAGINATION";
+export const SET_PAGE_LOADING = "SET_PAGE_LOADING";
+export const SET_SEARCH_LOADING = "SET_SEARCH_LOADING";

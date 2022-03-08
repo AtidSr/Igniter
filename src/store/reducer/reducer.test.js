@@ -1,3 +1,4 @@
+import { GET_GAME, SET_PAGINATION } from "../../types/types";
 import reducer, { INITIAL_STATE } from "./reducer";
 
 describe("Test reducer", () => {
@@ -19,7 +20,21 @@ describe("Test reducer", () => {
         },
       },
     ];
-    const action = { type: "SEARCH_GAME", payload: mock };
-    expect(reducer(INITIAL_STATE, action)).toEqual({ gameList: mock });
+    const action = { type: GET_GAME, payload: mock };
+    expect(reducer(INITIAL_STATE, action)).toEqual({
+      gameList: mock,
+      count: 0,
+      isLoading: false,
+    });
+  });
+
+  it("Should return count correctly", () => {
+    const count = 9999;
+    const action = { type: SET_PAGINATION, payload: count };
+    expect(reducer(INITIAL_STATE, action)).toEqual({
+      gameList: [],
+      count: count,
+      isLoading: false,
+    });
   });
 });

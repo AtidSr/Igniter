@@ -4,13 +4,14 @@ import { render as rtlRender } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import reducer from "../store/reducer/reducer";
+import gameSearchReducer from "../store/reducer/gameSearchReducer";
 
 function render(
   ui,
   {
     preloadedState,
     store = configureStore({
-      reducer: { gameReducer: reducer },
+      reducer: { gameReducer: reducer, searchReducer: gameSearchReducer },
       preloadedState,
     }),
     ...renderOptions

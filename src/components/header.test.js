@@ -5,9 +5,15 @@ import { BrowserRouter } from "react-router-dom";
 
 describe("Testing Header", () => {
   it("renders without crashing", () => {
+    const onChange = jest.fn();
     const { baseElement } = render(
       <BrowserRouter>
-        <HeaderComponent />
+        <HeaderComponent
+          inputValue={""}
+          onChange={onChange}
+          isLoading={false}
+          searchResult={[]}
+        />
       </BrowserRouter>
     );
     expect(baseElement).toBeInTheDocument();

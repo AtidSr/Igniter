@@ -1,5 +1,7 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import { ordering } from "../types/order";
 
 const Select = styled.button`
   border: none;
@@ -24,9 +26,21 @@ const Arrow = styled.i`
   display: inline-block;
   padding: 3px;
   transform: rotate(45deg);
+`;
+
+const InnerArrow = styled(Arrow)`
   position: absolute;
   right: 9px;
   top: 13px;
+`;
+
+const RotateArrow = styled(Arrow)`
+  margin-left: 1rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
+  ${(props) => `transform: rotate(${props.degree}deg)`}
 `;
 
 const Option = styled.li`
@@ -59,21 +73,14 @@ const Span = styled.span`
   font-weight: 600;
 `;
 
-const orderFilter = [
-  "name",
-  "released",
-  "added",
-  "created",
-  "updated",
-  "rating",
-  "metacritic",
-];
-
-const ItemSelectComponent = () => {
+const ItemSelectComponent = (params) => {
+  // option - selected dropdown value
+  // order - sortby desc or asc
+  const { option, setOption, setCurrentPage, order, setOrder, value } = params;
   const [isSelect, setIsSelect] = useState(false);
-  const [option, setOption] = useState(orderFilter[0]);
   const optionRef = useRef(null);
   const onSelectClick = useCallback(() => {
+    // set focus at dropdown instead of buttom
     optionRef.current.focus();
     setIsSelect((isSelect) => !isSelect);
   }, []);
@@ -84,14 +91,20 @@ const ItemSelectComponent = () => {
   }, []);
 
   // Set option filter
-  const handleSelectOption = useCallback((option) => {
-    setOption(option);
-    setIsSelect(false);
-  }, []);
+  const handleSelectOption = useCallback(
+    (option) => {
+      setOption(option);
+      setIsSelect(false);
+      setCurrentPage(1);
+      setOrder(ordering.ASC);
+    },
+    [setOption, setCurrentPage, setOrder]
+  );
 
   // Render Option list
-  const renderOption = () => {
-    return orderFilter.map((option, index) => (
+  const renderOption = useMemo(() => {
+    if (value.lenght < 0) return;
+    return value.map((option, index) => (
       <Option
         key={`option_${option}_${index}`}
         onClick={() => handleSelectOption(option)}
@@ -99,18 +112,43 @@ const ItemSelectComponent = () => {
         {option}
       </Option>
     ));
-  };
+  }, [handleSelectOption, value]);
+
+  // Handle sort by DESC or ASC
+  const handleSetOrder = useCallback(() => {
+    setOrder((order) => {
+      if (order === ordering.ASC) {
+        return ordering.DES;
+      }
+      return ordering.ASC;
+    });
+  }, [setOrder]);
 
   return (
-    <Container>
-      <Select onClick={onSelectClick}>
-        Ordery by: <Span>{option}</Span> <Arrow />
-      </Select>
-      <OptionList ref={optionRef} tabIndex={0} onBlur={setClose}>
-        {isSelect ? renderOption() : ""}
-      </OptionList>
-    </Container>
+    <>
+      <Container>
+        <Select onClick={onSelectClick} data-testid="select-btn">
+          Order by: <Span>{option}</Span> <InnerArrow />
+        </Select>
+        <OptionList ref={optionRef} tabIndex={0} onBlur={setClose}>
+          {isSelect ? renderOption : ""}
+        </OptionList>
+        <RotateArrow
+          degree={order === ordering.ASC ? "225" : "45"}
+          onClick={handleSetOrder}
+        />
+      </Container>
+    </>
   );
 };
 
 export default React.memo(ItemSelectComponent);
+
+ItemSelectComponent.propTypes = {
+  value: PropTypes.array.isRequired,
+  option: PropTypes.string,
+  setOption: PropTypes.func,
+  setCurrentPage: PropTypes.func,
+  order: PropTypes.string,
+  setOrder: PropTypes.func,
+};
