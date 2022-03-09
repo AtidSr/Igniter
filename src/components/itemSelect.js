@@ -5,18 +5,16 @@ import { ordering } from "../types/order";
 
 const Select = styled.button`
   border: none;
-  box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
   padding: 0.625rem 1.6rem 0.625rem 1rem;
   font-size: inherit;
   border-radius: 5px;
-  background-color: white;
-  position: relative;
+  background-color: #f7f7f8bd;
   cursor: pointer;
   width: 25%;
 
   &:focus,
   &:hover {
-    opacity: 0.7;
+    box-shadow: 0 0 7px rgb(0, 0, 0, 0.1);
   }
 `;
 
@@ -28,17 +26,14 @@ const Arrow = styled.i`
   transform: rotate(45deg);
 `;
 
-const InnerArrow = styled(Arrow)`
-  position: absolute;
-  right: 9px;
-  top: 13px;
-`;
-
 const RotateArrow = styled(Arrow)`
   margin-left: 1rem;
   cursor: pointer;
+  position: absolute;
+  right: 9px;
+  top: 7px;
   &:hover {
-    opacity: 0.7;
+    border-color: #06f;
   }
   ${(props) => `transform: rotate(${props.degree}deg)`}
 `;
@@ -47,30 +42,62 @@ const Option = styled.li`
   padding: 0.625rem 1rem;
   text-indent: 1.3rem;
   text-transform: capitalize;
-
   &:hover {
-    background: rgb(0, 0, 0, 0.1);
+    background: #06f;
+    color: #fff;
   }
 `;
 
 const OptionList = styled.ul`
-  width: 15%;
   background: #fff;
   box-shadow: 0 0 5px rgb(0, 0, 0, 0.1);
   position: absolute;
-  margin-top: 0.6rem;
   border-radius: 5px;
   list-style-type: none;
-  overflow: hidden;
+  left: 0;
+  right: 0;
+  margin-top: -2px;
+  z-index: 99;
+
+  ${(props) => `
+    ${
+      props.isSelect
+        ? `
+    padding: 0.625rem 0;
+    &::before {
+    content: "";
+    height: 12px;
+    width: 12px;
+    position: absolute;
+    border-radius: 0 0 4px;
+    margin-left: -5px;
+    left: 50%;
+    transform: rotate(-135deg);
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    border-right: 1px solid rgb(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-top: -7px;
+    top: 0;
+  }`
+        : ""
+    }
+`}
 `;
 
 const Container = styled.div`
+  display: inline;
   margin-top: 1.2rem;
+  position: relative;
+  background-color: white;
 `;
 
 const Span = styled.span`
   text-transform: capitalize;
   font-weight: 600;
+`;
+
+const OuterContainer = styled.span`
+  margin-right: 1rem;
 `;
 
 const ItemSelectComponent = (params) => {
@@ -81,7 +108,7 @@ const ItemSelectComponent = (params) => {
   const optionRef = useRef(null);
   const onSelectClick = useCallback(() => {
     // set focus at dropdown instead of buttom
-    optionRef.current.focus();
+    optionRef?.current?.focus();
     setIsSelect((isSelect) => !isSelect);
   }, []);
 
@@ -125,20 +152,25 @@ const ItemSelectComponent = (params) => {
   }, [setOrder]);
 
   return (
-    <>
+    <OuterContainer>
       <Container>
         <Select onClick={onSelectClick} data-testid="select-btn">
-          Order by: <Span>{option}</Span> <InnerArrow />
+          Order by: <Span>{option}</Span>
+          <RotateArrow
+            degree={order === ordering.ASC ? "225" : "45"}
+            onClick={handleSetOrder}
+          />
         </Select>
-        <OptionList ref={optionRef} tabIndex={0} onBlur={setClose}>
+        <OptionList
+          ref={optionRef}
+          tabIndex={0}
+          onBlur={setClose}
+          isSelect={isSelect}
+        >
           {isSelect ? renderOption : ""}
         </OptionList>
-        <RotateArrow
-          degree={order === ordering.ASC ? "225" : "45"}
-          onClick={handleSetOrder}
-        />
       </Container>
-    </>
+    </OuterContainer>
   );
 };
 

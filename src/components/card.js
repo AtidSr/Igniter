@@ -7,10 +7,14 @@ const CardContainer = styled.div`
   overflow: hidden;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+  background: #f7f7f8;
+  transition: 0.3s transform;
+  box-shadow: rgb(0 0 0 / 8%) 0 1px;
+  &:hover,
+  &:focus {
+  }
 `;
 const CardImage = styled.div`
-  background-color: red;
   width: 100%;
   min-height: 20vh;
   ${(props) => ({

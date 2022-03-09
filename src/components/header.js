@@ -37,7 +37,7 @@ const HeaderContainer = styled.div`
   top: 0;
   width: 100%;
   background: white;
-  box-shadow: 0 0 1px rgb(0, 0, 0, 0.3);
+  box-shadow: rgb(0 0 0 / 8%) 0 1px;
   padding: 0.4rem;
   z-index: 77;
 `;
@@ -52,10 +52,12 @@ const IconContainer = styled.div`
 const Icon = styled.h1`
   font-family: "Montserrat", sans-serif;
   font-weight: "900";
-  font-style: italic;
   text-transform: uppercase;
   margin-left: 0.3em;
   cursor: pointer;
+  &:hover {
+    color: #005ce6;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -187,6 +189,7 @@ const HeaderComponent = (props) => {
 
       <SearchContainer>
         <SearchInput
+          data-testid="search-input"
           ref={inputRef}
           type="text"
           background={search}
@@ -196,6 +199,7 @@ const HeaderComponent = (props) => {
           tabIndex={0}
         />
         <DropDownContainer
+          data-testid="search-drop-down"
           display={displayResult ? "block" : "none"}
           ref={dropDownRef}
         >
