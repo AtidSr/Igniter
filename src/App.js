@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { FrontPageComponent, SearchPageComponent } from "./pages";
 import GlobalStyled from "./GlobalStyled";
 import { Routes, Route } from "react-router-dom";
 import setUpEnvironment from "./environment";
+import { routePath } from "./appRoute";
 
 function App() {
   useEffect(() => {
@@ -14,8 +14,13 @@ function App() {
     <div className="App">
       <GlobalStyled />
       <Routes>
-        <Route path="/" element={<FrontPageComponent />} />
-        <Route path="/browse" element={<SearchPageComponent />} />
+        {routePath.map((route, index) => (
+          <Route
+            path={route.path}
+            element={route.getComponent()}
+            key={`route_${index}`}
+          />
+        ))}
       </Routes>
     </div>
   );

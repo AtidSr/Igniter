@@ -6,22 +6,34 @@ import { Provider } from "react-redux";
 import reducer from "../store/reducer/reducer";
 import gameSearchReducer from "../store/reducer/gameSearchReducer";
 
-function render(
-  ui,
-  {
+// const render = (
+//   ui,
+//   {
+//     preloadedState,
+//     store = configureStore({
+//       reducer: { gameReducer: reducer, searchReducer: gameSearchReducer },
+//       preloadedState,
+//     }),
+//     ...renderOptions
+//   } = {}
+// ) => {
+//   function Wrapper({ children }) {
+//     return <Provider store={store}>{children}</Provider>;
+//   }
+//   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+// };
+
+const render = (ui, preloadedState, ...renderOptions) => {
+  const store = configureStore({
+    reducer: { gameReducer: reducer, searchReducer: gameSearchReducer },
     preloadedState,
-    store = configureStore({
-      reducer: { gameReducer: reducer, searchReducer: gameSearchReducer },
-      preloadedState,
-    }),
-    ...renderOptions
-  } = {}
-) {
+  });
+
   function Wrapper({ children }) {
     return <Provider store={store}>{children}</Provider>;
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
-}
+};
 
 // re-export everything
 export * from "@testing-library/react";

@@ -15,7 +15,6 @@ describe("Testing axios search", () => {
   it("Should get right result", async () => {
     const response = await getGameApi();
     const results = response.data.results;
-    expect(results[0].name).toEqual(data.results[0].name);
-    expect(results[0].slug).toEqual(data.results[0].slug);
+    expect(results[0]).toEqual(data.results[0]);
   });
 });

@@ -15,10 +15,30 @@ describe("Testing Card Container", () => {
 
   it("Should render n time", () => {
     const gameList = [
-      { name: "test", background_image: "img_link" },
-      { name: "test", background_image: "img_link" },
-      { name: "test", background_image: "img_link" },
-      { name: "test", background_image: "img_link" },
+      {
+        name: "test",
+        background_image: "img_link",
+        slug: "a",
+        clip: { clip: "a" },
+      },
+      {
+        name: "test",
+        background_image: "img_link",
+        slug: "a",
+        clip: { clip: "a" },
+      },
+      {
+        name: "test",
+        background_image: "img_link",
+        slug: "a",
+        clip: { clip: "a" },
+      },
+      {
+        name: "test",
+        background_image: "img_link",
+        slug: "a",
+        clip: { clip: "a" },
+      },
     ];
     render(
       <BrowserRouter>

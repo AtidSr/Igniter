@@ -8,3 +8,10 @@ export const gameListSelector = createSelector(
     return gameListState;
   }
 );
+
+export const gameDetailSelector = createSelector(
+  [gameSelector],
+  (gameListState) => {
+    return gameListState.gameDetail;
+  }
+);

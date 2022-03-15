@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import search from "../asset/search.svg";
@@ -78,13 +78,9 @@ const SearchInput = styled.input`
 
 const SearchContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 60%;
   position: relative;
   align-items: center;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
 `;
 
 const DropDownContainer = styled.ul`
@@ -122,10 +118,16 @@ const DropDownItem = styled.li`
     background-color: #06f;
     color: white;
   }
-  &:first-child {
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+
+  &:first-child ${DropDownItem} {
     margin-top: 1rem;
   }
-  &:last-child {
+  &:last-child ${DropDownItem} {
     margin-bottom: 1rem;
   }
 `;
@@ -138,7 +140,7 @@ const LoadingContainer = styled.div`
 `;
 
 const HeaderComponent = (props) => {
-  const { inputValue, onChange, isLoading, searchResult } = props;
+  const { inputValue, setInput, onChange, isLoading, searchResult } = props;
   const [displayResult, setDisplayResult] = useState(false);
   const dropDownRef = useRef(null);
   const inputRef = useRef(null);
@@ -179,6 +181,11 @@ const HeaderComponent = (props) => {
     }
   }, [inputValue, isLoading]);
 
+  const onSearchResultClick = useCallback(() => {
+    setDisplayResult(false);
+    setInput("");
+  }, [setInput]);
+
   return (
     <HeaderContainer>
       <StyledLink to={`/browse`}>
@@ -210,9 +217,13 @@ const HeaderComponent = (props) => {
           ) : (
             searchResult?.map((result, index) => {
               return (
-                <DropDownItem key={`result_${index}`}>
-                  {result.name}
-                </DropDownItem>
+                <StyledLink
+                  to={`/detail/${result.slug}`}
+                  key={`result_${index}`}
+                  onClick={onSearchResultClick}
+                >
+                  <DropDownItem>{result.name}</DropDownItem>
+                </StyledLink>
               );
             })
           )}
@@ -226,6 +237,7 @@ export default React.memo(HeaderComponent);
 
 HeaderComponent.propTypes = {
   inputValue: PropTypes.string.isRequired,
+  setInput: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   searchResult: PropTypes.array.isRequired,

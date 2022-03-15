@@ -1,4 +1,9 @@
-import { GET_GAME, SET_PAGINATION } from "../../types/types";
+import {
+  CLEAR_GAME_DETAIL,
+  SET_GAME,
+  SET_GAME_DETAIL,
+  SET_PAGINATION,
+} from "../../types/types";
 import reducer, { INITIAL_STATE } from "./reducer";
 
 describe("Test reducer", () => {
@@ -20,11 +25,10 @@ describe("Test reducer", () => {
         },
       },
     ];
-    const action = { type: GET_GAME, payload: mock };
+    const action = { type: SET_GAME, payload: mock };
     expect(reducer(INITIAL_STATE, action)).toEqual({
+      ...INITIAL_STATE,
       gameList: mock,
-      count: 0,
-      isLoading: false,
     });
   });
 
@@ -32,9 +36,24 @@ describe("Test reducer", () => {
     const count = 9999;
     const action = { type: SET_PAGINATION, payload: count };
     expect(reducer(INITIAL_STATE, action)).toEqual({
-      gameList: [],
+      ...INITIAL_STATE,
       count: count,
-      isLoading: false,
+    });
+  });
+
+  it("Should return detail correctly", () => {
+    const payload = { name: "TEST", slug: "test" };
+    const action = { type: SET_GAME_DETAIL, payload: payload };
+    expect(reducer(INITIAL_STATE, action)).toEqual({
+      ...INITIAL_STATE,
+      gameDetail: payload,
+    });
+  });
+
+  it("Should able to clear gameDetail state", () => {
+    const action = { type: CLEAR_GAME_DETAIL };
+    expect(reducer(INITIAL_STATE, action)).toEqual({
+      ...INITIAL_STATE,
     });
   });
 });

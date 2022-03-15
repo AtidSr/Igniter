@@ -10,6 +10,7 @@ describe("Testing Header", () => {
       <BrowserRouter>
         <HeaderComponent
           inputValue={""}
+          setInput={jest.fn()}
           onChange={onChange}
           isLoading={false}
           searchResult={[]}
@@ -26,6 +27,7 @@ describe("Testing Header", () => {
       <BrowserRouter>
         <HeaderComponent
           inputValue={""}
+          setInput={jest.fn()}
           onChange={onChange}
           isLoading={false}
           searchResult={[]}
@@ -49,6 +51,7 @@ describe("Testing Header", () => {
       <BrowserRouter>
         <HeaderComponent
           inputValue={""}
+          setInput={jest.fn()}
           onChange={onChange}
           isLoading={false}
           searchResult={mock}
