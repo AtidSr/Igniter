@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import noImg from "../asset/404.jpg";
 
 const Video = styled.video`
   display: none;
@@ -16,7 +17,7 @@ const CardImage = styled.div`
   })}
   background-position: center;
   background-size: cover;
-  transition: all 0.2s ease-in;
+  transition: all 0.3s;
 `;
 
 const CardInfo = styled.div`
@@ -32,14 +33,12 @@ const CardInfo = styled.div`
 const Text = styled.p`
   text-align: right;
   color: #06f;
-  padding: 1rem;
   text-transform: uppercase;
   font-size: 0.8rem;
   font-weight: 600;
-  display: none;
-  position: absolute;
-  bottom: 0;
+  /* display: none; */
   width: 100%;
+  padding: 0 1rem;
 `;
 
 const CardContainer = styled.div`
@@ -48,20 +47,18 @@ const CardContainer = styled.div`
   border-radius: 10px;
   cursor: pointer;
   background: #f7f7f8;
-  transition: 0.3s transform;
   box-shadow: rgb(0 0 0 / 8%) 0 1px;
-  position: relative;
 
   &:hover ${CardImage}, &:focus ${CardImage} {
-    height: 0vh;
+    height: 17vh;
   }
-  &:hover ${CardInfo}, &:focus ${CardInfo} {
-    max-height: 0vh;
-    transition: max-height 0.3s ease-in;
-  }
-  &:hover ${Video}, &:focus ${Video}, &:hover ${Text}, &:focus ${Text} {
+  /* &:hover ${CardInfo}, &:focus ${CardInfo} {
+    max-height: 10vh;
+    transition: max-height 0.6s ease-in;
+  } */
+  /* &:hover ${Video}, &:focus ${Video}, &:hover ${Text}, &:focus ${Text} {
     display: block;
-  }
+  } */
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -74,10 +71,10 @@ const CardComponent = (props) => {
   return (
     <CardContainer>
       <StyledLink to={`/detail/${game.slug}`}>
-        <CardImage background={game.background_image} />
+        <CardImage background={game?.background_image || noImg} />
         <CardInfo> {game.name}</CardInfo>
-        <Video autoPlay muted loop src={game.clip.clip}></Video>
-        <Text>find out more{">>>"}</Text>
+        {/* <Video autoPlay muted loop src={game?.clip?.clip}></Video> */}
+        <Text>find out more{" >>> "}</Text>
       </StyledLink>
     </CardContainer>
   );

@@ -4,7 +4,7 @@ import mockData from "./api/mock/mock.json";
 import mockData2 from "./api/mock/getDetail.json";
 
 // set useMock = false to disable mock
-const useMock = true;
+export const useMock = true;
 
 // Set up mock value ( test website without calling api)
 const setUpEnvironment = () => {

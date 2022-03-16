@@ -13,7 +13,7 @@ describe("Testing axios get detail", () => {
   });
 
   it("Should get right result", async () => {
-    const response = await getGameDetailApi();
+    const response = await getGameDetailApi("test");
     const results = response.data;
     expect(results).toEqual(data);
   });
