@@ -22,4 +22,14 @@ describe("Selector test", () => {
 
     expect(gameDetailSelector(mockState)).toEqual(mockValue.gameDetail);
   });
+
+  it("Should return isLoading value correctly", () => {
+    const mockValue = { isLoading: false };
+
+    const mockState = {
+      gameReducer: mockValue,
+    };
+
+    expect(gameDetailSelector(mockState)).toEqual(mockValue.gameDetail);
+  });
 });

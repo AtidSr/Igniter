@@ -1,5 +1,6 @@
 import {
   CLEAR_GAME_DETAIL,
+  CLEAR_GAME_LIST,
   SET_GAME,
   SET_GAME_DETAIL,
   SET_PAGE_LOADING,
@@ -7,6 +8,7 @@ import {
 } from "../../types/types";
 import {
   clearGameDetailAction,
+  clearGameListAction,
   setDetailAction,
   setGameAction,
   setLoadingStatus,
@@ -49,6 +51,12 @@ describe("Action test", () => {
   it("Should return correct value (clear detail)", () => {
     expect(clearGameDetailAction()).toEqual({
       type: CLEAR_GAME_DETAIL,
+    });
+  });
+
+  it("Should return correct value (clear list)", () => {
+    expect(clearGameListAction()).toEqual({
+      type: CLEAR_GAME_LIST,
     });
   });
 });

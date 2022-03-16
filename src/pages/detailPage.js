@@ -6,13 +6,18 @@ import { getGameDetailApi } from "../api/getDetail";
 import {
   clearGameDetailAction,
   setDetailAction,
+  setLoadingStatus,
 } from "../store/action/actions";
-import { gameDetailSelector } from "../store/selector/selector";
+import {
+  gameDetailSelector,
+  isLoadingSelector,
+} from "../store/selector/selector";
 import { timeout } from "../utils/timeout";
 import playstation from "../asset/playstation.svg";
 import xbox from "../asset/xbox.svg";
 import steam from "../asset/steam.svg";
 import nintendo from "../asset/nintendo-switch.svg";
+import LoadingPageComponent from "./loadingPage";
 
 const HeaderSection = styled.div`
   width: 100%;
@@ -87,10 +92,14 @@ const DetailPageComponent = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const gameDetail = useSelector(gameDetailSelector);
+  const isLoading = useSelector(isLoadingSelector);
+
   const getGameDetail = useCallback(
     async (slug) => {
+      dispatch(setLoadingStatus(true));
       const response = await getGameDetailApi(slug);
       dispatch(setDetailAction(response.data));
+      dispatch(setLoadingStatus(false));
     },
     [dispatch]
   );
@@ -118,6 +127,9 @@ const DetailPageComponent = () => {
     }
   }, []);
 
+  if (isLoading) {
+    return <LoadingPageComponent />;
+  }
   if (Object.keys(gameDetail).length === 0) {
     return <></>;
   }

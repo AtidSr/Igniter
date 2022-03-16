@@ -15,3 +15,10 @@ export const gameDetailSelector = createSelector(
     return gameListState.gameDetail;
   }
 );
+
+export const isLoadingSelector = createSelector(
+  [gameSelector],
+  (gameListState) => {
+    return gameListState.isLoading;
+  }
+);

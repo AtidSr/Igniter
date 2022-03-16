@@ -6,6 +6,7 @@ import CardViewComponent from "../components/cardView";
 import ItemSelectComponent from "../components/itemSelect";
 import Pagination from "../components/pagination";
 import {
+  clearGameListAction,
   setGameAction,
   setLoadingStatus,
   setPagination,
@@ -50,6 +51,10 @@ const SearchPageComponent = () => {
         page: currentPage,
       })
     );
+
+    return () => {
+      dispatch(clearGameListAction());
+    };
   }, [currentPage, option, order, dispatch, fetchGame]);
 
   return (

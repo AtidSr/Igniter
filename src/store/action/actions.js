@@ -1,5 +1,6 @@
 import {
   CLEAR_GAME_DETAIL,
+  CLEAR_GAME_LIST,
   SET_GAME,
   SET_GAME_DETAIL,
   SET_PAGE_LOADING,
@@ -34,5 +35,11 @@ export const setDetailAction = (payload) => {
 export const clearGameDetailAction = () => {
   return {
     type: CLEAR_GAME_DETAIL,
+  };
+};
+
+export const clearGameListAction = () => {
+  return {
+    type: CLEAR_GAME_LIST,
   };
 };

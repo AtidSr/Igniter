@@ -1,5 +1,6 @@
 import {
   CLEAR_GAME_DETAIL,
+  CLEAR_GAME_LIST,
   SET_GAME,
   SET_GAME_DETAIL,
   SET_PAGE_LOADING,
@@ -39,6 +40,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         gameDetail: {},
+      };
+    case CLEAR_GAME_LIST:
+      return {
+        ...state,
+        gameList: [],
+        count: 0,
       };
     default:
       return state;
