@@ -16,7 +16,7 @@ import { timeout } from "../utils/timeout";
 import playstation from "../asset/playstation.svg";
 import xbox from "../asset/xbox.svg";
 import steam from "../asset/steam.svg";
-import nintendo from "../asset/nintendo-switch.svg";
+import nintendo from "../asset/nintendo.png";
 import LoadingPageComponent from "./loadingPage";
 
 const HeaderSection = styled.div`
@@ -94,6 +94,7 @@ const DetailPageComponent = () => {
   const gameDetail = useSelector(gameDetailSelector);
   const isLoading = useSelector(isLoadingSelector);
 
+  // get detail function
   const getGameDetail = useCallback(
     async (slug) => {
       dispatch(setLoadingStatus(true));
@@ -104,6 +105,7 @@ const DetailPageComponent = () => {
     [dispatch]
   );
 
+  // fetch detail when landing
   useEffect(() => {
     timeout(() => getGameDetail(params.slug));
 
@@ -112,6 +114,7 @@ const DetailPageComponent = () => {
     };
   }, [dispatch, getGameDetail, params]);
 
+  // Return icon
   const getPlatformIcon = useCallback((key) => {
     switch (key) {
       case "pc":
@@ -127,9 +130,12 @@ const DetailPageComponent = () => {
     }
   }, []);
 
+  // return spinner when loading
   if (isLoading) {
     return <LoadingPageComponent />;
   }
+
+  // return flagment when no game detail
   if (Object.keys(gameDetail).length === 0) {
     return <></>;
   }

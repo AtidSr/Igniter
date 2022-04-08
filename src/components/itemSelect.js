@@ -10,7 +10,7 @@ const Select = styled.button`
   border-radius: 5px;
   background-color: #f7f7f8bd;
   cursor: pointer;
-  width: 25%;
+  width: 100%;
 
   &:focus,
   &:hover {
@@ -44,6 +44,14 @@ const Option = styled.li`
   text-transform: capitalize;
   &:hover {
     background: #06f;
+    color: #fff;
+  }
+`;
+
+const ClearOption = styled(Option)`
+  color: red;
+  &:hover {
+    background: red;
     color: #fff;
   }
 `;
@@ -96,14 +104,26 @@ const Span = styled.span`
   font-weight: 600;
 `;
 
-const OuterContainer = styled.span`
-  margin-right: 1rem;
+const OuterContainer = styled.div`
+  margin: 1.2rem 1rem;
+  display: inline-block;
+  width: 22%;
 `;
 
 const ItemSelectComponent = (params) => {
   // option - selected dropdown value
   // order - sortby desc or asc
-  const { option, setOption, setCurrentPage, order, setOrder, value } = params;
+  const {
+    option,
+    setOption,
+    setCurrentPage,
+    order,
+    setOrder,
+    value,
+    label = "",
+    initialValue = "",
+    enebleClearBtn = false,
+  } = params;
   const [isSelect, setIsSelect] = useState(false);
   const optionRef = useRef(null);
   const onSelectClick = useCallback(() => {
@@ -122,8 +142,8 @@ const ItemSelectComponent = (params) => {
     (option) => {
       setOption(option);
       setIsSelect(false);
-      setCurrentPage(1);
-      setOrder(ordering.ASC);
+      if (setCurrentPage) setCurrentPage(1);
+      if (setOrder) setOrder(ordering.ASC);
     },
     [setOption, setCurrentPage, setOrder]
   );
@@ -131,21 +151,39 @@ const ItemSelectComponent = (params) => {
   // Render Option list
   const renderOption = useMemo(() => {
     if (value.lenght < 0) return;
-    return value.map((option, index) => (
-      <Option
-        key={`option_${option}_${index}`}
-        onClick={() => handleSelectOption(option)}
-      >
-        {option}
-      </Option>
-    ));
-  }, [handleSelectOption, value]);
+    return value.map((option, index) => {
+      let node = [];
+      if (enebleClearBtn && index === 0) {
+        let clearLabel = (
+          <ClearOption
+            key={`option_clear_${index}`}
+            onClick={() => handleSelectOption({ name: "", value: "" })}
+          >
+            clear
+          </ClearOption>
+        );
+        node.push(clearLabel);
+      }
+      let jsx = (
+        <Option
+          key={`option_${option.name}_${index}`}
+          onClick={() => handleSelectOption(option)}
+        >
+          {option.name}
+        </Option>
+      );
+      node.push(jsx);
+
+      return node;
+    });
+  }, [enebleClearBtn, handleSelectOption, value]);
 
   // Handle sort by DESC or ASC
   const handleSetOrder = useCallback(() => {
+    if (!setOrder) return;
     setOrder((order) => {
       if (order === ordering.ASC) {
-        return ordering.DES;
+        return ordering.DESC;
       }
       return ordering.ASC;
     });
@@ -155,11 +193,15 @@ const ItemSelectComponent = (params) => {
     <OuterContainer>
       <Container>
         <Select onClick={onSelectClick} data-testid="select-btn">
-          Order by: <Span>{option}</Span>
-          <RotateArrow
-            degree={order === ordering.ASC ? "225" : "45"}
-            onClick={handleSetOrder}
-          />
+          {label} <Span>{option?.name || initialValue}</Span>
+          {order ? (
+            <RotateArrow
+              degree={order === ordering.ASC ? "225" : "45"}
+              onClick={handleSetOrder}
+            />
+          ) : (
+            ""
+          )}
         </Select>
         <OptionList
           ref={optionRef}
@@ -178,9 +220,12 @@ export default React.memo(ItemSelectComponent);
 
 ItemSelectComponent.propTypes = {
   value: PropTypes.array.isRequired,
-  option: PropTypes.string,
+  option: PropTypes.object,
   setOption: PropTypes.func,
   setCurrentPage: PropTypes.func,
   order: PropTypes.string,
   setOrder: PropTypes.func,
+  label: PropTypes.string,
+  initialValue: PropTypes.string,
+  enebleClearBtn: PropTypes.bool,
 };

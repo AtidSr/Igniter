@@ -38,6 +38,7 @@ const PageIndexComponent = () => {
     }
   }, [searchGame, input, dispatch]);
 
+  // switch content component when path change
   const pageSwitcher = useCallback(() => {
     if (location.pathname === routePath[1].path) {
       return <SearchPageComponent />;

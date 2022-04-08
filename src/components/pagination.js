@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import { DOTS, usePagination } from "../utils/usePagination";
+import PropTypes from "prop-types";
 
 const PaginationContainer = styled.ul`
   display: flex;
@@ -149,3 +150,10 @@ const PaginationComponent = (props) => {
 };
 
 export default React.memo(PaginationComponent);
+
+PaginationComponent.propTypes = {
+  currentPage: PropTypes.number,
+  totalCount: PropTypes.number,
+  pageSize: PropTypes.number,
+  onPageChange: PropTypes.func,
+};

@@ -13,7 +13,7 @@ import {
 } from "../store/action/actions";
 
 import { gameListSelector } from "../store/selector/selector";
-import { orderFilter, ordering } from "../types/order";
+import { orderFilter, ordering, platfromList } from "../types/order";
 import { timeout } from "../utils/timeout";
 import LoadingPageComponent from "./loadingPage";
 
@@ -29,6 +29,8 @@ const SearchPageComponent = () => {
   const { gameList, count, isLoading } = useSelector(gameListSelector);
   const [currentPage, setCurrentPage] = useState(1);
   const [option, setOption] = useState(orderFilter[0]);
+  const [platfrom, setPlatform] = useState({ name: "", value: "" });
+
   const [order, setOrder] = useState(ordering.ASC);
 
   // Get game function
@@ -45,17 +47,21 @@ const SearchPageComponent = () => {
 
   // fetch game when landing
   useEffect(() => {
-    timeout(() =>
-      fetchGame({
-        ordering: `${order === ordering.ASC ? "" : "-"}${option}`,
+    timeout(() => {
+      let params = {
+        ordering: `${order === ordering.ASC ? "" : "-"}${option?.value}`,
         page: currentPage,
-      })
-    );
+      };
+      if (platfrom?.name?.length > 0) {
+        params.parent_platforms = platfrom.value;
+      }
+      fetchGame(params);
+    });
 
     return () => {
       dispatch(clearGameListAction());
     };
-  }, [currentPage, option, order, dispatch, fetchGame]);
+  }, [currentPage, option, order, dispatch, fetchGame, platfrom]);
 
   return (
     <div data-testid="search_page_component">
@@ -67,6 +73,15 @@ const SearchPageComponent = () => {
           order={order}
           setOrder={setOrder}
           value={orderFilter}
+          label={"Order by: "}
+        />
+
+        <ItemSelectComponent
+          option={platfrom}
+          setOption={setPlatform}
+          value={platfromList}
+          initialValue={"all platform"}
+          enebleClearBtn={platfrom.name.length > 0 ? true : false}
         />
         {isLoading ? (
           <LoadingPageComponent />

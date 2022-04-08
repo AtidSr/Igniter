@@ -23,7 +23,7 @@ describe("Testing Select Option", () => {
       />
     );
     fireEvent.click(screen.getByTestId("select-btn"));
-    fireEvent.click(screen.getByText(orderFilter[0]));
+    fireEvent.click(screen.getByText(orderFilter[0].name));
     expect(setOption).toBeCalled();
     expect(setCurrentPage).toBeCalled();
   });
